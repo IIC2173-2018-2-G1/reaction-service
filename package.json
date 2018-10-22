@@ -1,0 +1,28 @@
+{
+  "name": "reaction-service",
+  "version": "1.0.0",
+  "description": "This is the reaction microservice. It will be in charge of creating and deleting new reactions, and informing the creation of new reactions to the notification service",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IIC2173-2018-2-G1/reaction-service.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IIC2173-2018-2-G1/reaction-service/issues"
+  },
+  "homepage": "https://github.com/IIC2173-2018-2-G1/reaction-service#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
