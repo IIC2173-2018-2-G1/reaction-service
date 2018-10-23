@@ -4,6 +4,8 @@
   "description": "This is the reaction microservice. It will be in charge of creating and deleting new reactions, and informing the creation of new reactions to the notification service",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "devStart": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

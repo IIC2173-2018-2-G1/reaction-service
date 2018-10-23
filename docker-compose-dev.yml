@@ -3,10 +3,10 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-dev
     ports:
      - "8081:8080"
     volumes:
      - .:/code
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development

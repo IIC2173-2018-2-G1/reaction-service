@@ -9,7 +9,7 @@ WORKDIR /code
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install --only=production
+RUN npm install
 # If you are building your code for production
 # RUN npm install --only=production
 
@@ -17,4 +17,4 @@ RUN npm install --only=production
 COPY . .
 
 EXPOSE 8081
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "devStart" ]

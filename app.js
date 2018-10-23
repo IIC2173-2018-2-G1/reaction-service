@@ -1,7 +1,6 @@
-import express from 'express';
-import db from './db/db';
-import bodyParser from 'body-parser';
-
+const db = require('./db/db')
+const bodyParser = require('body-parser')
+const express = require('express')
 // Set up the express app
 const app = express();
 
@@ -9,6 +8,13 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// welcome
+app.get('/', (req, res) => {
+  return res.status(200).send({
+    message: 'Welcome to reaction service!'
+  })
+})
 
 // get reactions from single message
 app.get('/messages/:id/reactions', (req, res) => {
@@ -22,7 +28,7 @@ app.get('/messages/:id/reactions', (req, res) => {
                 reactions: msg.reactions,
               });
           }
-        
+
       }
     });
     return res.status(404).send({
@@ -30,8 +36,7 @@ app.get('/messages/:id/reactions', (req, res) => {
       message: 'message does not exist',
     });
   });
-  
-const PORT = 5000;
+
 //add reaction to message
 app.put('/messages/:id/reactions', (req, res) => {
     const id = parseInt(req.params.id, 10);
@@ -43,14 +48,14 @@ app.put('/messages/:id/reactions', (req, res) => {
         itemIndex = index;
       }
     });
-  
+
     if (!msgFound) {
       return res.status(404).send({
         success: 'false',
         message: 'msg not found',
       });
     }
-  
+
     if (!req.body.reaction_id) {
       return res.status(400).send({
         success: 'false',
@@ -67,15 +72,18 @@ app.put('/messages/:id/reactions', (req, res) => {
       id: msgFound.id,
       reactions: msgFound.reactions.append(req.body.reaction_id || msgFound.reaction_id),
     };
-  
+
     db.splice(itemIndex, 1, updatedMsg);
-  
+
     return res.status(201).send({
       success: 'true',
       message: 'reaction added successfully',
       updatedMsg,
     });
   });
+
+const PORT = 8080;
+
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`)
 });

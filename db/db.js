@@ -6,7 +6,7 @@ const messages =  [
       content: "This is a dummy message",
       reactions: [
             {
-              reaction_id: 1, 
+              reaction_id: 1,
               username: "caackermann"
             },
             {
@@ -24,4 +24,4 @@ const messages =  [
       }
 ];
 
-export default messages;
+module.exports.messages = messages;
