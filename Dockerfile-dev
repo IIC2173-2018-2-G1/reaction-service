@@ -16,5 +16,9 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+## Wait mongoDB to be accepting connections
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.4.0/wait /wait
+RUN chmod +x /wait
+
 EXPOSE 8081
-CMD [ "npm", "run", "devStart" ]
+CMD /wait && npm run devStart
