@@ -9,14 +9,4 @@ services:
     volumes:
      - .:/code
     environment:
-      - WAIT_HOSTS=mongo:27017
       - NODE_ENV=development
-    depends_on:
-      - "mongo"
-  mongo:
-      container_name: mongo
-      image: mongo
-      volumes:
-        - ./data:/data/db
-      ports:
-        - "27017:27017"
