@@ -22,14 +22,23 @@ app.post('/messages/:message_id/reactions', (req, res) => {
     const messageId = req.params.message_id
     const reactionId = req.query.reaction_id
     const username = req.get('Username')
-    // create reaction
-    const reaction = new Reaction({
-      username: username,
-      message_id: messageId,
-      reaction_id: reactionId
-    })
-    reaction.save().then(() => console.log('new reaction created'))
 
+    Reaction.findOne({'message_id': messageId, 'username': username}, (err, reaction) => {
+      // new reaction
+      if  (!reaction) {
+        const newReaction = new Reaction({
+          username: username,
+          message_id: messageId,
+          reaction_id: reactionId
+        })
+        newReaction.save().then(() => console.log('new reaction created'))
+      }
+      // update reaction
+      else {
+        reaction.reaction_id = reactionId
+        reaction.save().then(() => console.log('reaction changed'))
+      }
+    })
     // response
     return res.status(201).send({
       success: true,
