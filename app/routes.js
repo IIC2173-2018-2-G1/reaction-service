@@ -10,11 +10,30 @@ app.get('/', (req, res) => {
 
 // get reactions from single message
 app.get('/messages/:id/reactions', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    return res.status(404).send({
-      success: 'false',
-      message: 'message does not exist',
-    });
+    const messageId = req.params.message_id
+    const username = req.get('Username')
+    //check messageId
+    if (!messageId) {
+      return res.status(401).send({
+        success: 'false',
+        message: 'message id is required',
+      });
+    }
+    Reaction.find({'message_id': messageId}, (req, reactions) =>{
+      if (reactions) {
+        return res.status(201).send({
+          success: 'true',
+          reactions: reactions,
+        });
+      }
+      else {
+        return res.status(401).send({
+          success: 'false',
+          message: 'message does not exist'
+        })
+      }
+    })
+
   });
 
 //add reaction to message
