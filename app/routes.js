@@ -31,9 +31,7 @@ app.get('/messages/:message_id/reactions', (req, res) => {
           reactions: reactions,
         });
       }
-
     })
-
   });
 
 //add reaction to message
