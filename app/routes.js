@@ -38,7 +38,14 @@ app.get('/messages/:message_id/reactions', (req, res) => {
 app.post('/messages/:message_id/reactions', (req, res) => {
     const messageId = req.params.message_id
     const reactionId = req.query.reaction_id
-    const username = req.get('Username')
+    const currentUser = req.get('current-user')
+    if (typeof currentUser === 'undefined') {
+      return res.status(401).send({
+        success: 'false',
+        message: 'you are not authorized',
+      });
+    }
+    const username = JSON.parse(currentUser).username
     // check messageId, reactionId and username
     if (!messageId) {
       return res.status(401).send({
@@ -97,12 +104,18 @@ app.post('/messages/:message_id/reactions', (req, res) => {
       }
     })
   });
-}
 //delete reaction to message
 app.delete('/messages/:message_id/reactions'), (req, rest) =>{
   const messageId = req.params.message_id
   const reactionId = req.query.reaction_id
-  const username = req.get('Username')
+  const currentUser = req.get('current-user')
+  if (typeof currentUser === 'undefined') {
+    return res.status(401).send({
+      success: 'false',
+      message: 'you are not authorized',
+    });
+  }
+  const username = JSON.parse(currentUser).username
   // check messageId, reactionId and username
   if (!messageId) {
     return res.status(401).send({
@@ -131,4 +144,5 @@ app.delete('/messages/:message_id/reactions'), (req, rest) =>{
     });
   }
   })
+}
 }
