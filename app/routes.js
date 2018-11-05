@@ -131,18 +131,18 @@ app.delete('/messages/:message_id/reactions', (req, res) =>{
     });
   }
   Reaction.findOneAndDelete({'reaction_id': reactionId,'message_id': messageId, 'username': username}, (err) => {
-  if (err) {
-    return res.status(401).send({
-    success: 'false',
-    message: 'reaction not found',
-    });
-  }
-  else {
-    return res.status(201).send({
-      success: 'true',
-      message: 'reaction deleted successfully'
-    });
-  }
+    if (err) {
+      return res.status(401).send({
+      success: 'false',
+      message: 'reaction not found',
+      });
+    }
+    else {
+      return res.status(201).send({
+        success: 'true',
+        message: 'reaction deleted successfully'
+      });
+    }
   })
-}
+})
 }
