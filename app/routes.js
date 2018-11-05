@@ -98,3 +98,37 @@ app.post('/messages/:message_id/reactions', (req, res) => {
     })
   });
 }
+//delete reaction to message
+app.delete('/messages/:message_id/reactions'), (req, rest) =>{
+  const messageId = req.params.message_id
+  const reactionId = req.query.reaction_id
+  const username = req.get('Username')
+  // check messageId, reactionId and username
+  if (!messageId) {
+    return res.status(401).send({
+      success: 'false',
+      message: 'message_id is required',
+    });
+  }
+
+  if (!reactionId) {
+    return res.status(401).send({
+      success: 'false',
+      message: 'reaction_id is required',
+    });
+  }
+  Reaction.findOneAndDelete({'reaction_id': reactionId, 'username': username}, (err) => {
+  if (err) {
+    return res.status(401).send({
+    success: 'false',
+    message: 'reaction not found',
+    });
+  }
+  else {
+    return res.status(201).send({
+      success: 'true',
+      message: 'reaction deleted successfully'
+    });
+  }
+  })
+}
