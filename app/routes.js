@@ -9,12 +9,29 @@ app.get('/', (req, res) => {
   })
 
 // get reactions from single message
-app.get('/messages/:id/reactions', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    return res.status(404).send({
-      success: 'false',
-      message: 'message does not exist',
-    });
+app.get('/messages/:message_id/reactions', (req, res) => {
+    const messageId = req.params.message_id
+    //check messageId
+    if (!messageId) {
+      return res.status(401).send({
+        success: 'false',
+        message: 'message id is required',
+      });
+    }
+    Reaction.find({'message_id': messageId}, (err, reactions) =>{
+      if (err) {
+        return res.status(401).send({
+          success: 'false',
+          message: 'message does not exist'
+        })
+      }
+      if (reactions) {
+        return res.status(201).send({
+          success: 'true',
+          reactions: reactions,
+        });
+      }
+    })
   });
 
 //add reaction to message
