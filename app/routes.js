@@ -83,8 +83,8 @@ app.post('/messages/:message_id/reactions', (req, res) => {
 }
 //delete reaction to message
 app.delete('/messages/:message_id/reactions'), (req, rest) =>{
-  const messageID = req.params.message_id
-  const reactionID = req.query.reaction_id
+  const messageId = req.params.message_id
+  const reactionId = req.query.reaction_id
   const username = req.get('Username')
   // check messageId, reactionId and username
   if (!messageId) {
@@ -100,8 +100,7 @@ app.delete('/messages/:message_id/reactions'), (req, rest) =>{
       message: 'reaction_id is required',
     });
   }
-  //reaction can only be deleted by its creator
-  Reaction.findOneAndDelete({'message_id': messageId, 'username': username}, (err) => {
+  Reaction.findOneAndDelete({'reaction_id': reactionId, 'username': username}, (err) => {
   if (err) {
     return res.status(401).send({
     success: 'false',
