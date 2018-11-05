@@ -105,7 +105,7 @@ app.post('/messages/:message_id/reactions', (req, res) => {
     })
   });
 //delete reaction to message
-app.delete('/messages/:message_id/reactions'), (req, res) =>{
+app.delete('/messages/:message_id/reactions', (req, res) =>{
   const messageId = req.params.message_id
   const reactionId = req.query.reaction_id
   const currentUser = req.get('current-user')
