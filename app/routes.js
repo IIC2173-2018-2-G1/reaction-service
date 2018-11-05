@@ -105,7 +105,7 @@ app.post('/messages/:message_id/reactions', (req, res) => {
     })
   });
 //delete reaction to message
-app.delete('/messages/:message_id/reactions'), (req, rest) =>{
+app.delete('/messages/:message_id/reactions'), (req, res) =>{
   const messageId = req.params.message_id
   const reactionId = req.query.reaction_id
   const currentUser = req.get('current-user')
@@ -130,7 +130,7 @@ app.delete('/messages/:message_id/reactions'), (req, rest) =>{
       message: 'reaction_id is required',
     });
   }
-  Reaction.findOneAndDelete({'reaction_id': reactionId, 'username': username}, (err) => {
+  Reaction.findOneAndDelete({'reaction_id': reactionId,'message_id': messageId, 'username': username}, (err) => {
   if (err) {
     return res.status(401).send({
     success: 'false',
