@@ -1,4 +1,3 @@
-const db = require('./db/db')
 const bodyParser = require('body-parser')
 const express = require('express')
 // Set up the express app
