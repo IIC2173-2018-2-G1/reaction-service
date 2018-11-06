@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 mongoose.connect(configDB.url, {});
 
 require('./app/routes.js')(app);
-const PORT = 8080;
+const PORT = 8081;
 
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`)
