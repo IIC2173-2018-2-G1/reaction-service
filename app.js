@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // connect to database container
-mongoose.connect(configDB.url, {});
+mongoose.connect(configDB.url, { useNewUrlParser: true });
 
 require('./app/routes.js')(app);
 const PORT = 8081;
