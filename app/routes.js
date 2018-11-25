@@ -1,6 +1,6 @@
 const Reaction = require("./models/reaction.js");
 const mongoose = require("mongoose");
-
+const { required_members, is_valid_id_for_collection } = require("./utils");
 const ObjectId = mongoose.Types.ObjectId;
 
 module.exports = function(app) {
@@ -16,37 +16,35 @@ module.exports = function(app) {
 
   //add reaction to message
   app.put("/messages/:message_id/reactions", async (req, res) => {
-    const { message_id } = req.params;
-    const { reaction_id } = req.body;
     const user_id = req.header("X-User-ID");
-
-    if (typeof reaction_id === "undefined") {
-      return res.status(400).json({
-        success: "false",
-        message: "reaction_id is required"
-      });
-    }
-
-    const reaction = await Reaction.findById(reaction_id).exec();
-    if (!reaction) {
-      return res.status(400).json({
-        success: "false",
-        message: "invalid reaction_id"
-      });
-    }
-
-    const _id = new ObjectId(message_id);
-
-    const message = await mongoose.connection.db
-      .collection("messages")
-      .findOne({ _id });
-
-    if (!message) {
-      return res.status(400).json({
+    
+    const { message_id } = req.params;
+    const message = await is_valid_id_for_collection(
+      message_id,
+      "messages",
+      {
         success: "false",
         message: "invalid message_id"
-      });
-    }
+      },
+      res
+    );
+    if (!message) return;
+
+    if (!required_members(req.body, ["reaction_id"], res)) return;
+    const { reaction_id } = req.body;
+
+    const reaction = await is_valid_id_for_collection(
+      reaction_id,
+      "reactions",
+      {
+        success: "false",
+        message: "invalid reaction_id"
+      },
+      res
+    );
+    if (!reaction) return;
+
+    const _id = new ObjectId(message_id);
 
     const same_reaction = await mongoose.connection.db
       .collection("messages")
