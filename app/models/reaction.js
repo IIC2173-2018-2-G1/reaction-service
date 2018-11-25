@@ -1,9 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const reactionSchema = mongoose.Schema({
-      username        : String,
-      reaction_id     : Number,
-      message_id      : Number
+  name: { type: String, unique: true }
 });
 
-module.exports = mongoose.model('Reaction', reactionSchema);
+module.exports = mongoose.model("Reaction", reactionSchema);
